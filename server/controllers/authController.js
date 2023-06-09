@@ -67,8 +67,8 @@ exports.login = async (req, res, next) => {
    ),
    httpOnly: true,
    secure: process.env.NODE_ENV === "production",
-   sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
-  });
+   sameSite: "Lax",
+ });
 
     res.status(200).json({
       status: "success",
