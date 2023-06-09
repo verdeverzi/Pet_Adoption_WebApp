@@ -16,13 +16,14 @@ export const PetContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [petProfilePhoto, setPetProfilePhoto] = useState(null);
+  const backendurl = process.env.NODE_ENV === 'production' ? 'https://petadoption-rescueme-backend.onrender.com' : "http://localhost:4000"
 
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:4000/api/users/logout");
+      await axios.get(`${backendurl}/api/users/logout`);
       setIsLoggedIn(false);
     } catch (error) {
       console.log(error);
@@ -42,7 +43,7 @@ export const PetContextProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get("http://localhost:4000/api/pets/");
+      const res = await axios.get(`${backendurl}/api/pets/`);
       setallPets(res.data.data.pets);
       console.log(res);
     } catch (error) {
@@ -55,7 +56,7 @@ export const PetContextProvider = ({ children }) => {
   const fetchMe = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:4000/api/users/getMe");
+      const res = await axios.get(`${backendurl}/api/users/getMe`);
 
       console.log("Fetch Me", res.data.data);
       setUser(res.data.data);
@@ -74,7 +75,7 @@ export const PetContextProvider = ({ children }) => {
     setError(null);
     try {
       const { data } = await axios.get(
-        "http://localhost:4000/api/pets/random/"
+        `${backendurl}/api/pets/random/`
       );
 
       setRandomPets(data);
@@ -121,7 +122,7 @@ export const PetContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.patch(
-        "http://localhost:4000/api/users/updateMe",
+        `${backendurl}/api/users/updateMe`,
         { name: newName, email: newEmail }
       );
       setUser(res.data.data);
@@ -160,6 +161,7 @@ export const PetContextProvider = ({ children }) => {
         error,
         updateUser,
         fetchMe,
+        backendurl,
       }}
     >
       {children}

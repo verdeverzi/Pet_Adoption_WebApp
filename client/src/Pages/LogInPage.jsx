@@ -9,7 +9,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 function LoginPage() {
-  const { user, setUser, handleLogin } = useContext(PetContext);
+  const { user, setUser, handleLogin,backendurl } = useContext(PetContext);
 
   // console.log(user);
   // console.log(user.user.favorites)
@@ -31,7 +31,7 @@ function LoginPage() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/users/login",
+        `${backendurl}/api/users/login`,
         { email, password }
       );
       // check if the response contains a token or some other form of authentication

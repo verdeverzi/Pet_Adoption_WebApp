@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState ,useContext} from "react";
 import { Row, Col, Button, Card, Form } from "react-bootstrap";
 import axios from "axios";
 import shelterGif from "../svgs/shelter.gif";
+import PetContext from "../context/petsContextProvider";
+
 
 const ShelterSearch = () => {
+  const {  backendurl } = useContext(PetContext);
   const [city, setCity] = useState("");
   const [shelters, setShelters] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -12,7 +15,7 @@ const ShelterSearch = () => {
     event.preventDefault();
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/users/shelters?city=${city}`
+        `${backendurl}/api/users/shelters?city=${city}`
       );
 
       setShelters(response.data.data.shelters);
