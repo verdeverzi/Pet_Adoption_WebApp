@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useHistory } from "react";
 import "../styles/LogInPage.scss"
 import PetContext from "../context/petsContextProvider";
 // import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 function LoginPage() {
+  const history = useHistory();
   const { user, setUser, handleLogin, backendurl } = useContext(PetContext);
 
   // console.log(user);
@@ -43,7 +44,8 @@ function LoginPage() {
         handleLogin();
 
         // redirect the user to the dashboard or home page
-        window.location.href = "/userprofile";
+        // window.location.href = "/userprofile";
+        history.push("/userprofile");
       } else {
         // display an error message to the user
         setErrorMessage("Invalid email or password");
