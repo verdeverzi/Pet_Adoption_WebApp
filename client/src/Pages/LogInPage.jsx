@@ -1,4 +1,5 @@
-import React, { useState, useContext,useHistory } from "react";
+import React, { useState, useContext } from "react";
+import {useHistory} from "react-router-dom";
 import "../styles/LogInPage.scss"
 import PetContext from "../context/petsContextProvider";
 // import { useNavigate } from "react-router-dom";
