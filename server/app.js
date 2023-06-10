@@ -1,5 +1,3 @@
-const path = require('path');
-
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -19,7 +17,7 @@ const app = express();
 
 app.use(
   cors({
-    origin:[ "http://localhost:3000", "https://petadoption-rescueme.onrender.com"],
+    origin:[ "http://localhost:3000", 'https://petadoption-rescueme.onrender.com'],
     credentials: true,
   })
 );
@@ -50,10 +48,6 @@ mongoose.connection
 
 app.use("/api/pets", petRouter);
 app.use("/api/users", userRouter);
-// After all other route handlers:
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'client', 'public', 'index.html'));
-});
 
 //ERROR HANDLER MIDDLEWARES
 

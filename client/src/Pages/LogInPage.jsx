@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import "../styles/LogInPage.scss"
+import { useNavigate } from "react-router-dom";
+
 import PetContext from "../context/petsContextProvider";
 // import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
@@ -46,7 +47,7 @@ function LoginPage() {
 
         // redirect the user to the dashboard or home page
         // window.location.href = "/userprofile";
-navigate("/userprofile");
+        navigate("/userprofile");
       } else {
         // display an error message to the user
         setErrorMessage("Invalid email or password");
