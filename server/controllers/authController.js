@@ -1,6 +1,6 @@
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
-const {authError}= require("./../middleware/errorHandlers")
+const { authError } = require("./../middleware/errorHandlers");
 const User = require("./../models/userModel");
 
 const signToken = (id) => {
@@ -19,19 +19,18 @@ exports.signUp = async (req, res, next) => {
       passwordChangedAt: req.body.passwordChangedAt,
       shelter: req.body.shelter,
       photoURL: req.body.photoURL,
-      city: req.body.city
+      city: req.body.city,
     });
 
     const token = signToken(newUser._id);
 
-     res.cookie("jwt", token, {
-       expiresIn: new Date(
-         Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-       ),
-       httpOnly: true,
-       secure: process.env.NODE_ENV === "production",
-       
-     });
+    res.cookie("jwt", token, {
+      expiresIn: new Date(
+        Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: process.env.NODE_ENV === "development",
+      secure: process.env.NODE_ENV === "production",
+    });
 
     res.status(201).json({
       status: "success",
@@ -41,7 +40,6 @@ exports.signUp = async (req, res, next) => {
       },
     });
   } catch (err) {
-    
     next(err);
   }
 };
@@ -61,33 +59,29 @@ exports.login = async (req, res, next) => {
     } // no user or incorrect password gives error, password check on userModel
 
     const token = signToken(user._id);
- res.cookie("jwt", token, {
-   expiresIn: new Date(
-     Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-   ),
-   httpOnly: true,
-   secure: process.env.NODE_ENV === "production",
-   sameSite: "Lax",
- });
+    res.cookie("jwt", token, {
+      expiresIn: new Date(
+        Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: process.env.NODE_ENV === "development",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+    });
 
     res.status(200).json({
       status: "success",
       token,
-      user
+      user,
     });
-    
   } catch (err) {
-  
     next(err);
   }
 };
 
 exports.logout = async (req, res, next) => {
   try {
-    
     res.clearCookie("jwt", {
-      httpOnly: true,
-     
+      httpOnly:process.env.NODE_ENV==="development" ,
     });
 
     res.status(200).json({
@@ -104,14 +98,13 @@ exports.logout = async (req, res, next) => {
 
 exports.protect = async (req, res, next) => {
   try {
-     let token;
+    let token;
 
-     // Check if token exists in cookies
+    // Check if token exists in cookies
 
-     if (req.cookies && req.cookies.jwt) {
-       token = req.cookies.jwt;
-     }
-
+    if (req.cookies && req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
 
     //check that there is a token
 
@@ -138,39 +131,35 @@ exports.protect = async (req, res, next) => {
       return next(new Error("Password recently changed"));
     }
 
-
     req.user = currentUser;
 
     next();
-
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
 exports.updatePassword = async (req, res, next) => {
-   console.log(req.user._id);
-  try { 
-
-
+  console.log(req.user._id);
+  try {
     const user = await User.findById(req.user._id).select("+password");
-  
-    if (!(await user.correctPassword(req.body.currentPassword, user.password)))
-    {
-      return next(new Error ("Wrong current password"))
+
+    if (
+      !(await user.correctPassword(req.body.currentPassword, user.password))
+    ) {
+      return next(new Error("Wrong current password"));
     }
 
     user.password = req.body.password;
     user.passwordConfirm = req.body.password;
-    await user.save()
+    await user.save();
 
     const token = signToken(user._id);
     res.status(200).json({
       status: "success",
-      token
-    })
-
+      token,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
