@@ -24,9 +24,6 @@ const UserProfile = () => {
 
   // Check if user and photoURL are defined before accessing them
   const userPhotoURL = user.user && user.user.photoURL;
-  const userName = user.user && user.user.name;
-  const isShelter = user.user && user.user.shelter;
-  const city = user.user && user.user.city;
 
   return (
     <div className="user-profile">
@@ -38,13 +35,17 @@ const UserProfile = () => {
           </div>
           <div className="user-details">
             <div className="go-to-settings">
-              <h1>{userName}</h1>
-              {isShelter && <h4>Shelter</h4>}
-              <h4 className="city-name capitalize checkboxes-userprofile">
-                City: {city && <h4>{city}</h4>}
-              </h4>
-              <Button className="settings-button" size="xs" onClick={handleSettings}>
+              <h1>{user.user.name}</h1>
+            <h4 className="checkboxes-userprofile"> User: {user.user.shelter ? <h4>Shelter</h4> : null} </h4>
+            <h4 className="city-name capitalize checkboxes-userprofile"> City: <h4>{user.user.city}</h4></h4>
+
+              <Button
+                className="settings-button"
+                size="xs"
+                onClick={handleSettings}
+              >
                 Settings
+                {/* <BiEdit /> */}
               </Button>
             </div>
           </div>
@@ -94,8 +95,4 @@ const UserProfile = () => {
   );
 };
 
-
 export default UserProfile;
-
-
-
