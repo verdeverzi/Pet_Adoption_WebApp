@@ -1,7 +1,7 @@
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
@@ -15,13 +15,10 @@ const userRouter = require("./routes/userRoutes");
 
 const app = express();
 
-var corsOptions = {
-  origin: ['http://localhost:3000', 'https://pet-adoption-web-app2-hvxpsfkr3-verdeverzi.vercel.app'], // add more origins if needed
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
-  preflightContinue: true, // handles preflight requests
-  credentials: true // enabling cookies (since you're using `cookieParser`)
-};
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: '*', // allow all origins for testing
+  credentials: true
+}));
 
 app.use(cookieParser());
 
