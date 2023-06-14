@@ -44,7 +44,7 @@ function LoginPage() {
         handleLogin();
 
         // redirect the user to the dashboard or home page
-        window.location.href = "/#/userprofile";
+        window.location.href = "/userprofile";
       } else {
         // display an error message to the user
         setErrorMessage("Invalid email or password");

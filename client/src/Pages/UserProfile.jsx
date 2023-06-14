@@ -19,11 +19,11 @@ const UserProfile = () => {
     return <p>Loading user data...</p>;
   }
 
-  const addedPets = user?.pets || [];
-  const favorites = user?.favorites || [];
+  const addedPets = user.user?.pets || [];
+  const favorites = user.user?.favorites || [];
 
   // Check if user and photoURL are defined before accessing them
-  const userPhotoURL = user && user.photoURL;
+  const userPhotoURL = user.user && user.user.photoURL;
 
   return (
     <div className='user-profile'>
@@ -42,7 +42,7 @@ const UserProfile = () => {
               </h4>
               <h4 className='city-name capitalize checkboxes-userprofile'>
                 {" "}
-                City: <h4>{user.city}</h4>
+                City: <h4>{user.user.city}</h4>
               </h4>
 
               <Button
