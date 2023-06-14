@@ -30,9 +30,7 @@ function LoginPage() {
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        `${backendurl}/api/users/login`,
-        { email, password }
+      const response = await axios.post( `${backendurl}/api/users/login`, { email, password },  { withCredentials: true }
       );
       // check if the response contains a token or some other form of authentication
       if (response.data.user) {
