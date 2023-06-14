@@ -15,12 +15,12 @@ const userRouter = require("./routes/userRoutes");
 
 const app = express();
 
-app.use(
-  cors({
-    origin:[ 'http://localhost:3000', 'https://vercel.com/verdeverzi/pet-adoption-web-app2/5ocvxp14Gfhfp4QCJWtnAERT5PxU'],
-    credentials: true,
-  })
-);
+var corsOptions = {
+  origin: ['http://localhost:3000', 'https://pet-adoption-web-app2-hvxpsfkr3-verdeverzi.vercel.app'], // add more origins if needed
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
