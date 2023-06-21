@@ -16,9 +16,9 @@ const userRouter = require("./routes/userRoutes");
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://pet-adoption-web-app-y9s5.vercel.app/', 'pet-adoption-web-app-y9s5-he3sd5gse-verdeverzi.vercel.app'], // add more origins if needed
+  origin: ['http://localhost:3000', 'https://petadoption-rescueme.onrender.com'], // add more origins if needed
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
-  preflightContinue: true, // handles preflight requests
+  // preflightContinue: true, // handles preflight requests
   credentials: true // enabling cookies (since you're using `cookieParser`)
 };
 app.use(cors(corsOptions));
