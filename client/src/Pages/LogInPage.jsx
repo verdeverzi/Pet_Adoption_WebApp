@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import "../styles/LogInPage.scss"
 import PetContext from "../context/petsContextProvider";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import axios from "axios";
@@ -17,7 +17,7 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -42,7 +42,7 @@ function LoginPage() {
         handleLogin();
 
         // redirect the user to the dashboard or home page
-        window.location.href = "/userprofile";
+        navigate("/userprofile");
       } else {
         // display an error message to the user
         setErrorMessage("Invalid email or password");

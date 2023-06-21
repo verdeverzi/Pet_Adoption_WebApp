@@ -46,7 +46,8 @@ const PetCard = ({ pet, rdmpet }) => {
 
   useEffect(() => {
     const checkIfFavorite = async () => {
-      try {
+      try 
+      {
         const response = await axios.get(
           `http://localhost:4000/api/users/getMe`
         );
