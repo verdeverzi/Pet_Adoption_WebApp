@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { BiEdit } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import "../styles/UserProfile.scss";
@@ -7,12 +9,16 @@ import PetCard from "../components/PetCard";
 
 const UserProfile = () => {
   const { user, loading } = useContext(PetContext);
+  const navigate = useNavigate();
 
   console.log("user:", user);
   console.log("loading:", loading);
 
   const handleSettings = () => {
-    window.location.href = "/userprofilesettings"; // Navigate to settings page
+    navigate("/userprofilesettings"); // Navigate to settings page
+  };
+  const handleAdoptionClick = () => {
+    navigate("/giveforadoption");
   };
 
   if (!user || loading) {
@@ -92,7 +98,7 @@ const UserProfile = () => {
         <Button
           type='submit'
           className='btn_adoption'
-          href={"/giveforadoption"}
+          onClick={handleAdoptionClick}
         >
           Click here
         </Button>
