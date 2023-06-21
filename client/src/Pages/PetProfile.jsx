@@ -14,9 +14,13 @@ import PetContext from "../context/petsContextProvider"; */
 // adopt me button
 
 const PetProfile = () => {
-  const { state } = useLocation();
-  const pet = state;
+  let location = useLocation();
+  let pet = location.state;
+  
   console.log(pet);
+  const petName = pet?.name || '';
+  const petCity = pet?.city || '';
+
   return (
     <Container className="pet-profile-cont">
       <div className="pet-profile-info">
@@ -83,26 +87,3 @@ const PetProfile = () => {
 
 export default PetProfile;
 
-/* <Carousel className="carousel-pet">
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://picsum.photos/id/200/300"
-                alt="Second slide"
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://picsum.photos/id/200/300"
-                alt="Second slide"
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://picsum.photos/id/200/300"
-                alt="Third slide"
-              />
-            </Carousel.Item>
-          </Carousel> */
