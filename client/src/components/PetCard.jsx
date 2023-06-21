@@ -8,7 +8,7 @@ import axios from "axios";
 const PetCard = ({ pet, rdmpet }) => {
   const displayPet = rdmpet || pet;
   const [favorite, setFavorite] = useState(false);
-  const { user, setUser,backendurl } = useContext(PetContext);
+  const { user, setUser } = useContext(PetContext);
   const navigate = useNavigate();
 
   const FavHandler = async (e) => {
@@ -16,7 +16,7 @@ const PetCard = ({ pet, rdmpet }) => {
        e.stopPropagation();
       try {
         const response = await axios.post(
-          `${backendurl}/api/users/favorites`,
+          `http://localhost:4000/api/users/favorites`,
           {
             petId: displayPet._id,
           }
@@ -29,7 +29,7 @@ const PetCard = ({ pet, rdmpet }) => {
     } else {
       try {
         const res = await axios.delete(
-          `${backendurl}/api/users/favorites`,
+          `http://localhost:4000/api/users/favorites`,
           {
             data: {
               petId: displayPet._id,
@@ -46,15 +46,9 @@ const PetCard = ({ pet, rdmpet }) => {
 
   useEffect(() => {
     const checkIfFavorite = async () => {
-      try 
-      {
-//if statement modified by Giselle 
-        if (!isLoggedIn) {
-          return;
-        }
-  
+      try {
         const response = await axios.get(
-          `${backendurl}/api/users/favorites`
+          `http://localhost:4000/api/users/getMe`
         );
         const favorites = response.data.data.user.favorites.map(
           (pet) => pet._id
