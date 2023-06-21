@@ -39,7 +39,7 @@ fetchMe();
     fetchData();
     fetchRandomPets();
     fetchRandomFactsCats();
-    fetchRandomFactsDogs();
+    // fetchRandomFactsDogs();
     fetchMe();
   }, []);
 
@@ -105,20 +105,20 @@ fetchMe();
     }
   };
 
-  const fetchRandomFactsDogs = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch("https://dogapi.dog/api/v2/facts");
-      const data = await res.json();
-      // console.log(data);
-      setDogfacts(data);
+  // const fetchRandomFactsDogs = async () => {
+  //   setLoading(true);
+  //   setError(null);
+  //   try {
+  //     const res = await fetch("https://dogapi.dog/api/v2/facts");
+  //     const data = await res.json();
+  //     // console.log(data);
+  //     setDogfacts(data);
 
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     setError(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const updateMe = async (newName, newEmail) => {
     setLoading(true);
