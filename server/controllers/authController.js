@@ -28,7 +28,7 @@ exports.signUp = async (req, res, next) => {
       expiresIn: new Date(
         Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
       ),
-      httpOnly: process.env.NODE_ENV === "development",
+      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     });
 
@@ -63,7 +63,7 @@ exports.login = async (req, res, next) => {
       expiresIn: new Date(
         Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
       ),
-      httpOnly: process.env.NODE_ENV === "development",
+      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Lax",
     });
