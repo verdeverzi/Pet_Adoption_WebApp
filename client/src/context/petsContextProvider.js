@@ -23,7 +23,7 @@ export const PetContextProvider = ({ children }) => {
 
   const handleLogin = () => {
     setIsLoggedIn(true);
-fetchMe();
+
   };
   const handleLogout = async () => {
     try {
@@ -65,7 +65,7 @@ fetchMe();
       console.log("Fetch Me", res.data.data);
       setUser(res.data.data);
       // if you want to set favourites based on the user and update just favourites in the pet card component
-
+      handleLogin();
     } catch (error) {
       console.log(error);
       handleLogout();

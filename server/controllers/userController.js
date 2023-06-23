@@ -68,6 +68,7 @@ exports.getMe = async (req, res, next) => {
         user,
       },
     });
+
   } catch (err) {
     console.error(err);
     next(err);
