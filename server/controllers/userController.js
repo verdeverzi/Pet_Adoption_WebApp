@@ -49,6 +49,8 @@ exports.getUser = async (req, res) => {
 
 exports.getMe = async (req, res, next) => {
   try {
+    console.log('About to find user with ID:', req.user._id); // Before query
+
     const user = await User.findById(req.user._id)
       .populate({
         path: "favorites",
@@ -58,6 +60,7 @@ exports.getMe = async (req, res, next) => {
         path: "pets",
         select: "-__v",
       });
+      console.log('Found user:', user); // After query
 
     res.status(200).json({
       status: "success",

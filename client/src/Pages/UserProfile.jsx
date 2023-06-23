@@ -36,7 +36,7 @@ const UserProfile = () => {
           <div className='user-details'>
             <div className='go-to-settings'>
               <h1>{user.user?.name}</h1>
-              console.log(user)
+    
               <h4 className='checkboxes-userprofile'>
                 {" "}
                 User: {user.shelter ? <h4>Shelter</h4> : null}{" "}
