@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext,useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import "../styles/UserProfile.scss";
@@ -7,23 +8,33 @@ import PetCard from "../components/PetCard";
 
 const UserProfile = () => {
   const { user, loading } = useContext(PetContext);
+  const [localUser, setLocalUser] = useState(user);
+  const navigate = useNavigate();
 
-  console.log("user:", user);
+  useEffect(() => {
+    setLocalUser(user);
+  }, [user]);
+  console.log("user:", localUser);
   console.log("loading:", loading);
 
+
+  
   const handleSettings = () => {
-    window.location.href = "/userprofilesettings"; // Navigate to settings page
+   navigate ("/userprofilesettings"); // Navigate to settings page
+  };
+  const handleAdoptionClick = () => {
+    navigate("/giveforadoption");
   };
 
-  if (!user || loading) {
+
+  if (!localUser || loading) {
     return <p>Loading user data...</p>;
   }
 
-  const addedPets = user.user?.pets || [];
-  const favorites = user.user?.favorites || [];
-
+  const addedPets = localUser.user?.pets || [];
+  const favorites = localUser.user?.favorites || [];
   // Check if user and photoURL are defined before accessing them
-  const userPhotoURL = user.user && user.user.photoURL;
+  const userPhotoURL = localUser.user && localUser.user.photoURL;
 
   return (
     <div className='user-profile'>
@@ -35,15 +46,15 @@ const UserProfile = () => {
           </div>
           <div className='user-details'>
             <div className='go-to-settings'>
-              <h1>{user.user?.name}</h1>
+            <h1>{localUser.user?.name}</h1>
     
               <h4 className='checkboxes-userprofile'>
                 {" "}
-                User: {user.shelter ? <h4>Shelter</h4> : null}{" "}
+                <h4>{localUser.shelter ? <h4>Shelter</h4> : null}</h4>
               </h4>
               <h4 className='city-name capitalize checkboxes-userprofile'>
                 {" "}
-                City: <h4>{user.user?.city}</h4>
+                <h4>{localUser.user?.city}</h4>
               </h4>
 
               <Button
@@ -93,7 +104,7 @@ const UserProfile = () => {
         <Button
           type='submit'
           className='btn_adoption'
-          href={"/giveforadoption"}
+          onClick={handleAdoptionClick}
         >
           Click here
         </Button>
