@@ -41,7 +41,7 @@ const UserProfileSettings = () => {
       (async () => {
         try {
           const res = await axios.patch(
-            `${backendurl}/api/users/updateMe`,
+            `${backendurl}/api/users/updateMe`,{ withCredentials: true},
             {
               photo,
             }
@@ -73,7 +73,7 @@ const UserProfileSettings = () => {
     console.log(user);
     try {
       const res = await axios.patch(
-        `${backendurl}/api/users/updateMe`,
+        `${backendurl}/api/users/updateMe`, { withCredentials: true},
         {
           name: newName,
         }
@@ -90,11 +90,13 @@ const UserProfileSettings = () => {
     e.preventDefault();
     try {
       const res = await axios.patch(
-        `${backendurl}/api/users/updateMe`,
+        `${backendurl}/api/users/updateMe` ,{withCredentials: true},
         {
           email: newEmail,
         }
+      
       );
+    
       setUser(res.data.data);
       setNewEmail("");
     } catch (err) {
@@ -105,8 +107,9 @@ const UserProfileSettings = () => {
   const handleDeleteProfile = async () => {
     try {
       const res = await axios.delete(
-        `${backendurl}/api/users/deleteMe`
+        `${backendurl}/api/users/deleteMe`,{ withCredentials: true}
       );
+ 
       console.log("Res _> ", res);
       setUser(null);
       window.location.href = "/";

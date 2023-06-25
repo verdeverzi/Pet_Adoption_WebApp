@@ -9,7 +9,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 function LoginPage() {
-  const { user, setUser, handleLogin,backendurl } = useContext(PetContext);
+  const { user, setUser, handleLogin,backendurl,fetchMe } = useContext(PetContext);
 
   // console.log(user);
   // console.log(user.user.favorites)
@@ -30,7 +30,7 @@ function LoginPage() {
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post( `${backendurl}/api/users/login`, { email, password },  { withCredentials: true }
+      const response = await axios.post( `${backendurl}/api/users/login`, { email, password }
       );
       // check if the response contains a token or some other form of authentication
       if (response.data.user) {
@@ -40,10 +40,12 @@ function LoginPage() {
         console.log(user);
         // console.log(response.data);
         handleLogin();
+        fetchMe();
 
         // redirect the user to the dashboard or home page
         navigate("/userprofile");
       } else {
+
         // display an error message to the user
         setErrorMessage("Invalid email or password");
       }

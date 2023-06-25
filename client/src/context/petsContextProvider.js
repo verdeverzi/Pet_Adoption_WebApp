@@ -28,7 +28,9 @@ export const PetContextProvider = ({ children }) => {
   };
   const handleLogout = async () => {
     try {
-      await axios.get(`${backendurl}/api/users/logout`);
+      await axios.get(`${backendurl}/api/users/logout`,  {
+        withCredentials: true,
+      });
       setIsLoggedIn(false);
     } catch (error) {
       console.log(error);
@@ -48,7 +50,9 @@ export const PetContextProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get(`${backendurl}/api/pets/`);
+      const res = await axios.get(`${backendurl}/api/pets/`, {
+        withCredentials: true,
+      });
       setallPets(res.data.data.pets);
       console.log(res);
     } catch (error) {
@@ -61,8 +65,8 @@ export const PetContextProvider = ({ children }) => {
   const fetchMe = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${backendurl}/api/users/getMe`);
-
+      const res = await axios.get(`${backendurl}/api/users/getMe`,{ withCredentials: true});
+     
       console.log("Fetch Me", res.data.data);
       setUser(res.data.data);
       // if you want to set favourites based on the user and update just favourites in the pet card component
@@ -124,7 +128,7 @@ export const PetContextProvider = ({ children }) => {
   const updateMe = async (newName, newEmail) => {
     setLoading(true);
     try {
-      const res = await axios.patch(`${backendurl}/api/users/updateMe`, {
+      const res = await axios.patch(`${backendurl}/api/users/updateMe`, { withCredentials: true}, {
         name: newName,
         email: newEmail,
       });
