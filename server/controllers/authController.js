@@ -96,28 +96,23 @@ exports.logout = async (req, res, next) => {
 };
 
 //gives access to registered users
-
 exports.protect = async (req, res, next) => {
   try {
     let token;
-
-    // Check if token exists in cookies
 
     if (req.cookies && req.cookies.jwt) {
       token = req.cookies.jwt;
     }
 
-    //check that there is a token
-
     if (!token) {
       return next(new Error("No token provided"));
     }
 
-    //verify method jwt, (args: token to be decoded and secret key), made it as promise instead of callback
+    console.log('Token:', token); // Log the token
 
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-    //check that user still exits and hasn't been deleted
+    console.log('Decoded:', decoded); // Log the decoded object
 
     const currentUser = await User.findById(decoded.id);
     if (!currentUser) {
@@ -126,7 +121,7 @@ exports.protect = async (req, res, next) => {
       );
     }
 
-    //check if the password has been changed after the token was created
+    console.log('Current user:', currentUser); // Log the currentUser object
 
     if (currentUser.changedPasswordAfter(decoded.iat)) {
       return next(new Error("Password recently changed"));
@@ -139,6 +134,7 @@ exports.protect = async (req, res, next) => {
     next(err);
   }
 };
+
 
 exports.updatePassword = async (req, res, next) => {
   console.log(req.user._id);
