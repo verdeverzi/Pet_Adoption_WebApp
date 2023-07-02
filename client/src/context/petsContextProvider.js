@@ -16,6 +16,8 @@ export const PetContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [petProfilePhoto, setPetProfilePhoto] = useState(null);
+
+
   const backendurl =
     process.env.NODE_ENV === "production"
       ? "https://petadoption-rescueme-backend.onrender.com"
@@ -73,7 +75,7 @@ export const PetContextProvider = ({ children }) => {
       handleLogin();
     } catch (error) {
       console.log(error);
-      handleLogout();
+      // handleLogout();
     } finally {
       setLoading(false);
     }

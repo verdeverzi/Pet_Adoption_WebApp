@@ -37,7 +37,7 @@ const Footer = () => {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="#" iclassName="nav-link">
+              <Nav.Link href="#" className="nav-link">
                 <BsFacebook size={20} />
               </Nav.Link>
             </Nav.Item>

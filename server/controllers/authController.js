@@ -30,7 +30,6 @@ exports.signUp = async (req, res, next) => {
       ),
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      
     });
 
     res.status(201).json({
@@ -60,13 +59,17 @@ exports.login = async (req, res, next) => {
     } // no user or incorrect password gives error, password check on userModel
 
     const token = signToken(user._id);
+    let myCookieDomain = "localhost"
+    
+    if ( process.env.NODE_ENV === "production") {
+    myCookieDomain = ".onrender.com"
+    }
     res.cookie("jwt", token, {
-      expiresIn: new Date(
-        Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-      ),
+      expiresIn: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "None",
+      domain: myCookieDomain,
     });
 
     res.status(200).json({
@@ -82,7 +85,7 @@ exports.login = async (req, res, next) => {
 exports.logout = async (req, res, next) => {
   try {
     res.clearCookie("jwt", {
-      httpOnly:process.env.NODE_ENV==="development" ,
+      httpOnly: process.env.NODE_ENV === "development",
     });
 
     res.status(200).json({
@@ -108,11 +111,11 @@ exports.protect = async (req, res, next) => {
       return next(new Error("No token provided"));
     }
 
-    console.log('Token:', token); // Log the token
+    console.log("Token:", token); // Log the token
 
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-    console.log('Decoded:', decoded); // Log the decoded object
+    console.log("Decoded:", decoded); // Log the decoded object
 
     const currentUser = await User.findById(decoded.id);
     if (!currentUser) {
@@ -121,7 +124,7 @@ exports.protect = async (req, res, next) => {
       );
     }
 
-    console.log('Current user:', currentUser); // Log the currentUser object
+    console.log("Current user:", currentUser); // Log the currentUser object
 
     if (currentUser.changedPasswordAfter(decoded.iat)) {
       return next(new Error("Password recently changed"));
@@ -134,7 +137,6 @@ exports.protect = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.updatePassword = async (req, res, next) => {
   console.log(req.user._id);

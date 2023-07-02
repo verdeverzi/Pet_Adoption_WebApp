@@ -31,10 +31,11 @@ const UserProfile = () => {
     return <p>Loading user data...</p>;
   }
 
-  const addedPets = localUser.user?.pets || [];
-  const favorites = localUser.user?.favorites || [];
+  const addedPets = localUser?.pets || [];
+  const favorites = localUser?.favorites || [];
+  console.log(addedPets)
   // Check if user and photoURL are defined before accessing them
-  const userPhotoURL = localUser.user && localUser.user.photoURL;
+  const userPhotoURL = localUser&& localUser.photoURL;
 
   return (
     <div className='user-profile'>
@@ -46,15 +47,15 @@ const UserProfile = () => {
           </div>
           <div className='user-details'>
             <div className='go-to-settings'>
-            <h1>{localUser.user?.name}</h1>
+            <h1>{localUser?.name}</h1>
     
               <h4 className='checkboxes-userprofile'>
                 {" "}
-                <h4>{localUser.shelter ? <h4>Shelter</h4> : null}</h4>
+             {localUser?.shelter? 'Shelter' : null}
               </h4>
               <h4 className='city-name capitalize checkboxes-userprofile'>
                 {" "}
-                <h4>{localUser.user?.city}</h4>
+             {localUser?.city}
               </h4>
 
               <Button

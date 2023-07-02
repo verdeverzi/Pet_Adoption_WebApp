@@ -33,11 +33,11 @@ function LoginPage() {
       const response = await axios.post( `${backendurl}/api/users/login`, { email, password }
       );
       // check if the response contains a token or some other form of authentication
+      console.log('!!!',response);
       if (response.data.user) {
         // save the token in local storage for subsequent requests
 
         setUser(response.data.user);
-        console.log(user);
         // console.log(response.data);
         handleLogin();
         fetchMe();

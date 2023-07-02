@@ -11,7 +11,9 @@ const PetCard = ({ pet, rdmpet}) => {
   const [favorite, setFavorite] = useState(false);
   const { user, setUser , backendurl} = useContext(PetContext);
   const navigate = useNavigate();
-
+  console.log('displayPet:', displayPet);
+  console.log('favorite:', favorite);
+  
   const FavHandler = async (e) => {
     if (!favorite) {
        e.stopPropagation();
