@@ -1,7 +1,4 @@
 # Pet_Adoption_RescueMeApp
-<div align="center">
-<img src="gif" width="80%"  />
-</div>
 
 
 RescueMe PetAdoption is  a web-based application created as the final project of a full-stack web development course. 
