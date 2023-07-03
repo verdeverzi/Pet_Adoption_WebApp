@@ -6,6 +6,7 @@
     <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/459baa356c4c4e5a967ad624b4fb49df-1688326315459-with-play.gif">
   </a>
 
+npm install -g yarn
 
  run command : yarn 
 <br>
