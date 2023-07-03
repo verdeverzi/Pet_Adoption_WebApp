@@ -32,12 +32,12 @@ To get started with RescueMe , please follow these steps:
 2. Search for pets with the help of various filters, add pet to a favorite list.
 4. Post a pet for adoption.
 5. Search for shelters by city.
-6.  you can change your profile information and photo in the settings!
+6.  you can change your profile information and photo in the settings
 
 
 
+![](client/src/images/home_page.gif)
 
-![](client/src/images/home.gif)
 <p>Watch the full presentation here:</p>
 <a href="https://www.loom.com/share/459baa356c4c4e5a967ad624b4fb49df">
     <p>RescueMe_PetAdoption_WebApp - Watch Presentation Video</p>
