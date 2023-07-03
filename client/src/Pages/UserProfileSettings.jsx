@@ -7,7 +7,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const UserProfileSettings = () => {
-  const { user, setUser,backendurl } = useContext(PetContext);
+  const { user, setUser } = useContext(PetContext);
 
   const [photo, setPhoto] = useState(null); // store the photo in state
   const [uploading, setUploading] = useState(false);
@@ -41,7 +41,7 @@ const UserProfileSettings = () => {
       (async () => {
         try {
           const res = await axios.patch(
-            `${backendurl}/api/users/updateMe`,{ withCredentials: true},
+            "http://localhost:4000/api/users/updateMe",
             {
               photo,
             }
@@ -73,7 +73,7 @@ const UserProfileSettings = () => {
     console.log(user);
     try {
       const res = await axios.patch(
-        `${backendurl}/api/users/updateMe`, { withCredentials: true},
+        "http://localhost:4000/api/users/updateMe",
         {
           name: newName,
         }
@@ -90,13 +90,11 @@ const UserProfileSettings = () => {
     e.preventDefault();
     try {
       const res = await axios.patch(
-        `${backendurl}/api/users/updateMe` ,{withCredentials: true},
+        "http://localhost:4000/api/users/updateMe",
         {
           email: newEmail,
         }
-      
       );
-    
       setUser(res.data.data);
       setNewEmail("");
     } catch (err) {
@@ -107,9 +105,8 @@ const UserProfileSettings = () => {
   const handleDeleteProfile = async () => {
     try {
       const res = await axios.delete(
-        `${backendurl}/api/users/deleteMe`,{ withCredentials: true}
+        "http://localhost:4000/api/users/deleteMe"
       );
- 
       console.log("Res _> ", res);
       setUser(null);
       window.location.href = "/";

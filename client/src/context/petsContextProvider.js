@@ -17,22 +17,12 @@ export const PetContextProvider = ({ children }) => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [petProfilePhoto, setPetProfilePhoto] = useState(null);
 
-
-  const backendurl =
-    process.env.NODE_ENV === "production"
-      ? "https://petadoption-rescueme-backend.onrender.com"
-      : "http://localhost:4000";
-
-
   const handleLogin = () => {
     setIsLoggedIn(true);
-
   };
   const handleLogout = async () => {
     try {
-      await axios.get(`${backendurl}/api/users/logout`,  {
-        withCredentials: true,
-      });
+      await axios.get("http://localhost:4000/api/users/logout");
       setIsLoggedIn(false);
     } catch (error) {
       console.log(error);
@@ -44,7 +34,7 @@ export const PetContextProvider = ({ children }) => {
     fetchData();
     fetchRandomPets();
     fetchRandomFactsCats();
-    // fetchRandomFactsDogs();
+    fetchRandomFactsDogs();
     fetchMe();
   }, []);
 
@@ -52,9 +42,7 @@ export const PetContextProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get(`${backendurl}/api/pets/`, {
-        withCredentials: true,
-      });
+      const res = await axios.get("http://localhost:4000/api/pets/");
       setallPets(res.data.data.pets);
       console.log(res);
     } catch (error) {
@@ -67,15 +55,15 @@ export const PetContextProvider = ({ children }) => {
   const fetchMe = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${backendurl}/api/users/getMe`,{ withCredentials: true});
-     
+      const res = await axios.get("http://localhost:4000/api/users/getMe");
+
       console.log("Fetch Me", res.data.data);
       setUser(res.data.data);
       // if you want to set favourites based on the user and update just favourites in the pet card component
       handleLogin();
     } catch (error) {
       console.log(error);
-      // handleLogout();
+      handleLogout();
     } finally {
       setLoading(false);
     }
@@ -85,7 +73,9 @@ export const PetContextProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get(`${backendurl}/api/pets/random/`);
+      const { data } = await axios.get(
+        "http://localhost:4000/api/pets/random/"
+      );
 
       setRandomPets(data);
       console.log(data);
@@ -112,28 +102,28 @@ export const PetContextProvider = ({ children }) => {
     }
   };
 
-  // const fetchRandomFactsDogs = async () => {
-  //   setLoading(true);
-  //   setError(null);
-  //   try {
-  //     const res = await fetch("https://dogapi.dog/api/v2/facts");
-  //     const data = await res.json();
-  //     // console.log(data);
-  //     setDogfacts(data);
+  const fetchRandomFactsDogs = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("https://dogapi.dog/api/v2/facts");
+      const data = await res.json();
+      // console.log(data);
+      setDogfacts(data);
 
-  //     setError(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const updateMe = async (newName, newEmail) => {
     setLoading(true);
     try {
-      const res = await axios.patch(`${backendurl}/api/users/updateMe`, { withCredentials: true}, {
-        name: newName,
-        email: newEmail,
-      });
+      const res = await axios.patch(
+        "http://localhost:4000/api/users/updateMe",
+        { name: newName, email: newEmail }
+      );
       setUser(res.data.data);
       return true;
     } catch (err) {
@@ -170,7 +160,6 @@ export const PetContextProvider = ({ children }) => {
         error,
         updateUser,
         fetchMe,
-        backendurl,
       }}
     >
       {children}

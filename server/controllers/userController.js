@@ -2,16 +2,19 @@ const User = require("./../models/userModel");
 const Pet = require("./../models/petModel");
 const cloudinary = require("cloudinary").v2;
 
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
+
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find();
 
+   
     res.status(200).json({
       status: "success",
       results: users.length,
@@ -48,57 +51,56 @@ exports.getUser = async (req, res) => {
 };
 
 exports.getMe = async (req, res, next) => {
-  try {
-    console.log('About to find user with ID:', req.user._id); // Before query
+   try {
+     const user = await User.findById(req.user._id)
+       .populate({
+         path: "favorites",
+         select: "-__v -createdAt",
+       })
+       .populate({
+         path: "pets",
+         select: "-__v",
+       });
 
-    const user = await User.findById(req.user._id)
-      .populate({
-        path: "favorites",
-        select: "-__v -createdAt",
-      })
-      .populate({
-        path: "pets",
-        select: "-__v",
-      });
-      console.log('Found user:', user); // After query
-
-    res.status(200).json({
-      status: "success",
-      data: {
-        user,
-      },
-    });
-console.log('user?',user)
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-};
+     res.status(200).json({
+       status: "success",
+       data: {
+         user
+       },
+     });
+   } catch (err) {
+     next(err)
+   }
+}
 
 exports.updateMe = async (req, res, next) => {
   try {
+
     let photoURL = null;
 
-    if (req.body.photo) {
-      const result = await cloudinary.uploader.upload(req.body.photo, {
-        public_id: req.user.email.split("@")[0],
-      });
 
-      photoURL = result.secure_url;
-    }
+    if (req.body.photo) {
+  
+       
+        const result = await cloudinary.uploader.upload(req.body.photo, {public_id: req.user.email.split("@")[0]});
+        
+        photoURL = result.secure_url;
+       
+      
+      }
 
     if (req.body.password || req.body.passwordConfirm) {
       return next(
         new Error(
-          "This route is not for password updates. Please use /updateMyPassword."
-        )
+          "This route is not for password updates. Please use /updateMyPassword.")
       );
     }
+    
 
     // 3) Update user document
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
-
+    
       { ...req.body, photoURL },
       {
         new: true,
@@ -112,10 +114,12 @@ exports.updateMe = async (req, res, next) => {
         user: updatedUser,
       },
     });
+
   } catch (err) {
-    next(err);
+    next(err)
   }
 };
+
 
 exports.deleteUserPhoto = async (req, res, next) => {
   try {
@@ -140,8 +144,10 @@ exports.deleteUserPhoto = async (req, res, next) => {
       user.photoURL.lastIndexOf(".")
     );
 
-    const result = await cloudinary.uploader.destroy(publicId);
-
+    const result = await cloudinary.uploader.destroy(
+      publicId
+    );
+    
     if (result.result !== "ok") {
       return res.status(500).json({
         status: "error",
@@ -149,9 +155,9 @@ exports.deleteUserPhoto = async (req, res, next) => {
       });
     }
 
-    await User.findByIdAndUpdate(user._id, {
-      photoURL: null,
-    });
+   await User.findByIdAndUpdate(user._id, {
+      photoURL: null
+    })
 
     res.status(200).json({
       status: "success",
@@ -165,12 +171,13 @@ exports.deleteUserPhoto = async (req, res, next) => {
 exports.deleteMe = async (req, res, next) => {
   try {
     const user = await User.findByIdAndDelete(req.user._id);
-    res.status(200).json({
-      status: "success",
-      data: {
-        userDeleted: user.email,
-      },
-    });
+ res.status(200).json({
+   status: "success",
+   data: {
+     userDeleted: user.email,
+   }
+ });
+
   } catch (error) {
     next(error);
   }
@@ -197,6 +204,7 @@ exports.getShelters = async (req, res, next) => {
     next(err);
   }
 };
+
 
 exports.createUser = (req, res) => {
   res.status(500).json({

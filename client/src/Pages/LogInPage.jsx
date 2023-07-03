@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import "../styles/LogInPage.scss"
 import PetContext from "../context/petsContextProvider";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import axios from "axios";
@@ -9,7 +9,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 function LoginPage() {
-  const { user, setUser, handleLogin,backendurl,fetchMe } = useContext(PetContext);
+  const { user, setUser, handleLogin } = useContext(PetContext);
 
   // console.log(user);
   // console.log(user.user.favorites)
@@ -17,7 +17,7 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -30,22 +30,22 @@ function LoginPage() {
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post( `${backendurl}/api/users/login`, { email, password }
+      const response = await axios.post(
+        "http://localhost:4000/api/users/login",
+        { email, password }
       );
       // check if the response contains a token or some other form of authentication
-      console.log('!!!',response);
       if (response.data.user) {
         // save the token in local storage for subsequent requests
 
         setUser(response.data.user);
+        console.log(user);
         // console.log(response.data);
         handleLogin();
-        fetchMe();
 
         // redirect the user to the dashboard or home page
-        navigate("/userprofile");
+        window.location.href = "/userprofile";
       } else {
-
         // display an error message to the user
         setErrorMessage("Invalid email or password");
       }

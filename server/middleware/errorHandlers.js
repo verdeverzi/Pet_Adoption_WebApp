@@ -4,7 +4,7 @@ exports.routeNotFound = (req, res, next) => {
   res.status(404).json({
     statusCode: 404,
     status: "fail",
-    message: `Can't find ${req.protocol}://${req.get('host')}${req.originalUrl}`,
+    message: `Can't find http://localhost:4000${req.originalUrl}`,
   });
 };
 

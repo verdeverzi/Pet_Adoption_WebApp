@@ -152,7 +152,6 @@ exports.createPet = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-  // fetchData();
 };
 
 exports.updatePet = async (req, res, next) => {

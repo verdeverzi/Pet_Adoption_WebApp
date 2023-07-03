@@ -9,7 +9,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const SignUpPage = () => {
-  const { updateUser,backendurl } = useContext(PetContext);
+  const { updateUser } = useContext(PetContext);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ const SignUpPage = () => {
   const handleSubmitSignUp = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(`${backendurl}/api/users/signup`, {
+      await axios.post("http://localhost:4000/api/users/signup", {
         name,
         email,
         password,

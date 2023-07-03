@@ -1,5 +1,4 @@
-import React, { useContext,useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
 import { BiEdit } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import "../styles/UserProfile.scss";
@@ -8,59 +7,41 @@ import PetCard from "../components/PetCard";
 
 const UserProfile = () => {
   const { user, loading } = useContext(PetContext);
-  const [localUser, setLocalUser] = useState(user);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    setLocalUser(user);
-  }, [user]);
-  console.log("user:", localUser);
+  console.log("user:", user);
   console.log("loading:", loading);
 
-
-  
   const handleSettings = () => {
-   navigate ("/userprofilesettings"); // Navigate to settings page
-  };
-  const handleAdoptionClick = () => {
-    navigate("/giveforadoption");
+    window.location.href = "/userprofilesettings"; // Navigate to settings page
   };
 
-
-  if (!localUser || loading) {
+  if (!user || loading) {
     return <p>Loading user data...</p>;
   }
 
-  const addedPets = localUser?.pets || [];
-  const favorites = localUser?.favorites || [];
-  console.log(addedPets)
+  const addedPets = user.user?.pets || [];
+  const favorites = user.user?.favorites || [];
+
   // Check if user and photoURL are defined before accessing them
-  const userPhotoURL = localUser&& localUser.photoURL;
+  const userPhotoURL = user.user && user.user.photoURL;
 
   return (
-    <div className='user-profile'>
-      <div className='user-data'>
-        <div className='user-personal-info'>
-          <div className='user-avatar-image'>
+    <div className="user-profile">
+      <div className="user-data">
+        <div className="user-personal-info">
+          <div className="user-avatar-image">
             {/* Use the userPhotoURL variable with nullish coalescing operator ?? */}
-            <img src={userPhotoURL ?? ""} alt='User Avatar' />
+            <img src={userPhotoURL ?? ""} alt="User Avatar" />
           </div>
-          <div className='user-details'>
-            <div className='go-to-settings'>
-            <h1>{localUser?.name}</h1>
-    
-              <h4 className='checkboxes-userprofile'>
-                {" "}
-             {localUser?.shelter? 'Shelter' : null}
-              </h4>
-              <h4 className='city-name capitalize checkboxes-userprofile'>
-                {" "}
-             {localUser?.city}
-              </h4>
+          <div className="user-details">
+            <div className="go-to-settings">
+              <h1>{user.user.name}</h1>
+            <h4 className="checkboxes-userprofile"> User: {user.user.shelter ? <h4>Shelter</h4> : null} </h4>
+            <h4 className="city-name capitalize checkboxes-userprofile"> City: <h4>{user.user.city}</h4></h4>
 
               <Button
-                className='settings-button'
-                size='xs'
+                className="settings-button"
+                size="xs"
                 onClick={handleSettings}
               >
                 Settings
@@ -70,11 +51,11 @@ const UserProfile = () => {
           </div>
         </div>
 
-        <div className='pet-groups-container'>
-          <div className='favorite-pets'>
+        <div className="pet-groups-container">
+          <div className="favorite-pets">
             <h4>Your favorite pets list</h4>
             {favorites.length > 0 ? (
-              <div className='pet-card-container'>
+              <div className="pet-card-container">
                 {favorites.map((pet) => (
                   <PetCard key={pet._id} pet={pet} />
                 ))}
@@ -84,10 +65,10 @@ const UserProfile = () => {
             )}
           </div>
 
-          <div className='added-pets'>
+          <div className="added-pets">
             <h4>Pets added for adoption</h4>
             {addedPets.length > 0 ? (
-              <div className='pet-card-container'>
+              <div className="pet-card-container">
                 {addedPets.map((pet) => (
                   <PetCard key={pet._id} pet={pet} />
                 ))}
@@ -99,13 +80,13 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <div className='give-for-adoption'>
+      <div className="give-for-adoption">
         <h4>Give for adoption</h4>
 
         <Button
-          type='submit'
-          className='btn_adoption'
-          onClick={handleAdoptionClick}
+          type="submit"
+          className="btn_adoption"
+          href={"/giveforadoption"}
         >
           Click here
         </Button>
