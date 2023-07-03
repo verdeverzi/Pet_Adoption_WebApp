@@ -1,6 +1,6 @@
 # Pet_Adoption_RescueMeApp
 <div align="center">
-<img src="README/EntScape.gif" width="80%"  alt="Game of Thrones API" />
+<img src="gif" width="80%"  />
 </div>
 
 
@@ -35,8 +35,9 @@ To get started with RescueMe , please follow these steps:
 6.  you can change your profile information and photo in the settings
 
 
-
-![](client/src/images/home_page.gif)
+<div align="center">
+<img src="client/src/images/home_page.gif" width="80%"  />
+</div>
 
 <p>Watch the full presentation here:</p>
 <a href="https://www.loom.com/share/459baa356c4c4e5a967ad624b4fb49df">
