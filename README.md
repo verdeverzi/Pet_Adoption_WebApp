@@ -22,8 +22,9 @@ RescueMe PetAdoption is  a web-based application created as the final project of
 To get started with RescueMe , please follow these steps:
 
 1. npm install -g yarn
-2.run command : yarn start for client and for server
+2. run command : yarn start for client and for server
 
+----------------------------------------------------------------------------------------------------------------------------------------------------
 
 1. Register through the registration form, adding your  name, desired profile either Individual or Shelter, E-mail and password.
 2. Search for pets with the help of various filters, add pet to a favorite list.
