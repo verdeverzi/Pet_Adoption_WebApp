@@ -47,7 +47,7 @@ To get started with RescueMe , please follow these steps:
 - Sorina - [GitHub](https://github.com/verdeverzi). 
 - Giselle - [GitHub](https://github.com/GiselleAnido)
 - Lia - [GitHub](https://github.com/LiaGrozav)
-  
+- Elaine - [GitHub](https://github.com/elainealso)
 
 Thank you for your interest in RescueMe!
 
