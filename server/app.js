@@ -15,20 +15,23 @@ const userRouter = require("./routes/userRoutes");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   })
+// );
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://petadoption-rescueme.onrender.com','https://pet-adoption-web-app-y9s5-b16nl34so-verdeverzi.vercel.app/'], // add more origins if needed
+  origin: [
+    "http://localhost:3000",
+    "https://petadoption-rescueme.onrender.com",
+    "https://pet-adoption-web-app-y9s5-b16nl34so-verdeverzi.vercel.app/",
+  ], // add more origins if needed
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
   // preflightContinue: true, // handles preflight requests
-  credentials: true // enabling cookies (since you're using `cookieParser`)
+  credentials: true, // enabling cookies (since you're using `cookieParser`)
 };
 app.use(cors(corsOptions));
-
 
 app.use(cookieParser());
 
