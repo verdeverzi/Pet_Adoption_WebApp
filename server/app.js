@@ -25,7 +25,7 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "https://petadoption-rescueme.onrender.com",
-    "https://pet-adoption-web-app-y9s5-b16nl34so-verdeverzi.vercel.app/",
+    "https://pet-adoption-web-app-y9s5-b16nl34so-verdeverzi.vercel.app", // removed trailing slash
   ], // add more origins if needed
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
   // preflightContinue: true, // handles preflight requests

@@ -68,7 +68,9 @@ export const PetContextProvider = ({ children }) => {
   const fetchMe = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${backendurl}/api/users/getMe`);
+      const res = await axios.get(`${backendurl}/api/users/getMe`, {
+        withCredentials: true,
+      });
 
       console.log("Fetch Me", res.data.data);
       setUser(res.data.data);
@@ -131,10 +133,14 @@ export const PetContextProvider = ({ children }) => {
   const updateMe = async (newName, newEmail) => {
     setLoading(true);
     try {
-      const res = await axios.patch(`${backendurl}/api/users/updateMe`, {
-        name: newName,
-        email: newEmail,
-      });
+      const res = await axios.patch(
+        `${backendurl}/api/users/updateMe`,
+        {
+          name: newName,
+          email: newEmail,
+        },
+        { withCredentials: true }
+      );
       setUser(res.data.data);
       return true;
     } catch (err) {
