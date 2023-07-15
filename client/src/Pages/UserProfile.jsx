@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { BiEdit } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import "../styles/UserProfile.scss";
@@ -11,6 +11,12 @@ const UserProfile = () => {
   const navigate = useNavigate();
   console.log("user:", user);
   console.log("loading:", loading);
+
+  const { fetchAll } = useContext(PetContext);
+
+  useEffect(() => {
+    fetchAll();
+  }, []);
 
   const handleSettings = () => {
     // window.location.href = "/userprofilesettings"; // Navigate to settings page

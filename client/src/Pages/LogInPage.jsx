@@ -48,7 +48,7 @@ function LoginPage() {
 
         // redirect the user to the dashboard or home page
         // window.location.href = "/userprofile";
-        fetchAll();
+
         navigate("/userprofile");
       } else {
         // display an error message to the user
