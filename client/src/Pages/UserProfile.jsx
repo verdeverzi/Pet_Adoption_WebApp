@@ -4,26 +4,28 @@ import { Button } from "react-bootstrap";
 import "../styles/UserProfile.scss";
 import PetContext from "../context/petsContextProvider";
 import PetCard from "../components/PetCard";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const { user, loading } = useContext(PetContext);
-
+  const navigate = useNavigate();
   console.log("user:", user);
   console.log("loading:", loading);
 
   const handleSettings = () => {
-    window.location.href = "/userprofilesettings"; // Navigate to settings page
+    // window.location.href = "/userprofilesettings"; // Navigate to settings page
+    navigate("/userprofilesettings");
   };
 
   if (!user || loading) {
     return <p>Loading user data...</p>;
   }
 
-  const addedPets = user.user?.pets || [];
-  const favorites = user.user?.favorites || [];
+  const addedPets = user?.user?.pets || [];
+  const favorites = user?.user?.favorites || [];
 
   // Check if user and photoURL are defined before accessing them
-  const userPhotoURL = user.user && user.user.photoURL;
+  const userPhotoURL = user?.user && user?.user?.photoURL;
 
   return (
     <div className="user-profile">
@@ -35,9 +37,15 @@ const UserProfile = () => {
           </div>
           <div className="user-details">
             <div className="go-to-settings">
-              <h1>{user.user.name}</h1>
-            <h4 className="checkboxes-userprofile"> User: {user.user.shelter ? <h4>Shelter</h4> : null} </h4>
-            <h4 className="city-name capitalize checkboxes-userprofile"> City: <h4>{user.user.city}</h4></h4>
+              <h1>{user?.user?.name}</h1>
+              <h4 className="checkboxes-userprofile">
+                {" "}
+                User: {user?.user?.shelter ? <h4>Shelter</h4> : null}{" "}
+              </h4>
+              <h4 className="city-name capitalize checkboxes-userprofile">
+                {" "}
+                City: <h4>{user?.user?.city}</h4>
+              </h4>
 
               <Button
                 className="settings-button"

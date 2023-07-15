@@ -1,16 +1,19 @@
 import React, { useState, useContext } from "react";
-import "../styles/LogInPage.scss"
+import "../styles/LogInPage.scss";
 import PetContext from "../context/petsContextProvider";
 // import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
 function LoginPage() {
-  const { user, setUser, handleLogin,backendurl } = useContext(PetContext);
+  const { user, setUser, handleLogin, backendurl, fetchAll } =
+    useContext(PetContext);
 
+  const navigate = useNavigate();
   // console.log(user);
   // console.log(user.user.favorites)
 
@@ -30,10 +33,10 @@ function LoginPage() {
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        `${backendurl}/api/users/login`,
-        { email, password }
-      );
+      const response = await axios.post(`${backendurl}/api/users/login`, {
+        email,
+        password,
+      });
       // check if the response contains a token or some other form of authentication
       if (response.data.user) {
         // save the token in local storage for subsequent requests
@@ -44,7 +47,9 @@ function LoginPage() {
         handleLogin();
 
         // redirect the user to the dashboard or home page
-        window.location.href = "/userprofile";
+        // window.location.href = "/userprofile";
+        fetchAll();
+        navigate("/userprofile");
       } else {
         // display an error message to the user
         setErrorMessage("Invalid email or password");

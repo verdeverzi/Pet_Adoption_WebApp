@@ -18,10 +18,10 @@ export const PetContextProvider = ({ children }) => {
   const [petProfilePhoto, setPetProfilePhoto] = useState(null);
 
   const backendurl =
-  process.env.NODE_ENV === "production"
-    ? "https://petadoption-rescueme-backend.onrender.com"
-    : "http://localhost:4000";
- 
+    process.env.NODE_ENV === "production"
+      ? "https://petadoption-rescueme-backend.onrender.com"
+      : "http://localhost:4000";
+
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
@@ -42,6 +42,14 @@ export const PetContextProvider = ({ children }) => {
     fetchRandomFactsDogs();
     fetchMe();
   }, []);
+
+  function fetchAll() {
+    fetchData();
+    fetchRandomPets();
+    fetchRandomFactsCats();
+    fetchRandomFactsDogs();
+    fetchMe();
+  }
 
   const fetchData = async () => {
     setLoading(true);
@@ -78,9 +86,7 @@ export const PetContextProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get(
-        `${backendurl}/api/pets/random/`
-      );
+      const { data } = await axios.get(`${backendurl}/api/pets/random/`);
 
       setRandomPets(data);
       console.log(data);
@@ -125,10 +131,10 @@ export const PetContextProvider = ({ children }) => {
   const updateMe = async (newName, newEmail) => {
     setLoading(true);
     try {
-      const res = await axios.patch(
-        `${backendurl}/api/users/updateMe`,
-        { name: newName, email: newEmail }
-      );
+      const res = await axios.patch(`${backendurl}/api/users/updateMe`, {
+        name: newName,
+        email: newEmail,
+      });
       setUser(res.data.data);
       return true;
     } catch (err) {
@@ -146,6 +152,7 @@ export const PetContextProvider = ({ children }) => {
   return (
     <PetContext.Provider
       value={{
+        fetchAll,
         allpets,
         randomPets,
         catfacts,

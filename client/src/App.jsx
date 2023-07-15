@@ -15,24 +15,19 @@ import SignUpPage from "./Pages/SignUpPage";
 import LogInPage from "./Pages/LogInPage";
 import UserProfile from "./Pages/UserProfile";
 import GiveForAdoptionForm from "./Pages/GiveForAdoptionForm";
-import UserProfileSettings from "./Pages/UserProfileSettings"
+import UserProfileSettings from "./Pages/UserProfileSettings";
 import { PetContextProvider } from "./context/petsContextProvider";
 
-
 function App() {
-
   return (
     <>
       <PetContextProvider>
-        <NavbarComp  />
-       
+        <NavbarComp />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route
-            path="/login"
-            element={<LogInPage />}
-          />
+          <Route path="/login" element={<LogInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/shelter" element={<ShelterSearch />} />
           <Route path="/petprofile" element={<PetProfile />} />
@@ -43,9 +38,12 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/giveforadoption" element={<GiveForAdoptionForm />} />
-          <Route path="/userprofilesettings" element={<UserProfileSettings />} />
+          <Route
+            path="/userprofilesettings"
+            element={<UserProfileSettings />}
+          />
           <Route path="/logout" element={<Home />} />
-          <Route path="/*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
         <Footer />

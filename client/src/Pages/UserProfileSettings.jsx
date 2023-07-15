@@ -3,12 +3,13 @@ import { Button, Form } from "react-bootstrap";
 import "../styles/UserProfileSettings.scss";
 import PetContext from "../context/petsContextProvider";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
 const UserProfileSettings = () => {
-  const { user, setUser ,backendurl} = useContext(PetContext);
-
+  const { user, setUser, backendurl } = useContext(PetContext);
+  const navigate = useNavigate();
   const [photo, setPhoto] = useState(null); // store the photo in state
   const [uploading, setUploading] = useState(false);
   // track whether a photo is being uploaded
@@ -17,7 +18,7 @@ const UserProfileSettings = () => {
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   console.log(user);
-  
+
   useEffect(() => {
     console.log("User object in useEffect:", user);
     if (user && user.user && user.user.photoURL) {
@@ -27,7 +28,6 @@ const UserProfileSettings = () => {
 
   console.log("User object in component:", user);
 
-  
   const handleUploadPhoto = (event) => {
     const file = event.target.files[0];
     console.log(file);
@@ -40,12 +40,9 @@ const UserProfileSettings = () => {
       // Make API call to update user in database
       (async () => {
         try {
-          const res = await axios.patch(
-            `${backendurl}/api/users/updateMe`,
-            {
-              photo,
-            }
-          );
+          const res = await axios.patch(`${backendurl}/api/users/updateMe`, {
+            photo,
+          });
           console.log(res);
           setUser(res.data.data);
           setPhoto(res.data.data.photoURL);
@@ -72,12 +69,9 @@ const UserProfileSettings = () => {
     e.preventDefault();
     console.log(user);
     try {
-      const res = await axios.patch(
-        `${backendurl}/api/users/updateMe`,
-        {
-          name: newName,
-        }
-      );
+      const res = await axios.patch(`${backendurl}/api/users/updateMe`, {
+        name: newName,
+      });
       console.log(res.data.data);
       setUser(res.data.data);
       setNewName("");
@@ -89,12 +83,9 @@ const UserProfileSettings = () => {
   const handleSaveEmail = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.patch(
-        `${backendurl}/api/users/updateMe`,
-        {
-          email: newEmail,
-        }
-      );
+      const res = await axios.patch(`${backendurl}/api/users/updateMe`, {
+        email: newEmail,
+      });
       setUser(res.data.data);
       setNewEmail("");
     } catch (err) {
@@ -104,12 +95,11 @@ const UserProfileSettings = () => {
 
   const handleDeleteProfile = async () => {
     try {
-      const res = await axios.delete(
-        `${backendurl}/api/users/deleteMe`,
-      );
+      const res = await axios.delete(`${backendurl}/api/users/deleteMe`);
       console.log("Res _> ", res);
       setUser(null);
-      window.location.href = "/";
+      // window.location.href = "/";
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -121,11 +111,11 @@ const UserProfileSettings = () => {
 
       <Form.Group controlId="formName" className="form-groups">
         <Form.Label>Edit photo</Form.Label>
-   
-          <Button className="settings-button" onClick={handleSelectPhoto}>
-            Choose file 
-          </Button>
-        
+
+        <Button className="settings-button" onClick={handleSelectPhoto}>
+          Choose file
+        </Button>
+
         {uploading && <p>Uploading photo...</p>}
         {error && <p className="text-danger">{error}</p>}
         <Form.Control
@@ -147,7 +137,7 @@ const UserProfileSettings = () => {
           onChange={handleNameChange}
         />
         <Button className="settings-button" onClick={handleSaveName}>
-          Save 
+          Save
         </Button>
       </Form.Group>
 
@@ -161,7 +151,7 @@ const UserProfileSettings = () => {
           onChange={handleEmailChange}
         />
         <Button className="settings-button" onClick={handleSaveEmail}>
-          Save 
+          Save
         </Button>
       </Form.Group>
 
